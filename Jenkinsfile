@@ -1,26 +1,18 @@
 pipeline {
-  agent any
-  stages {
-    stage('Build') {
-        steps ('Starting Jobs'){
-          build 'JobA'
+    agent any
+    triggers {
+        upstream 'Task81, Task72, '
+    }
+    stages {
+      stage('FIRST-JOB'){
+        steps{
+    git 'https://github.com/demos-project/neal2.git'
         }
-          steps ('Starting Sub Jobs') {
-             build 'JobB'
-} 
-       steps ('Starting Sub Jobs') {
-   build 'JobC'
-}
   }
-    stage('Test') {
-      steps {
-        echo 'Testing..'
-      }
+        stage('Example') {
+            steps {
+                echo 'Hello World'
+            }
+        }
     }
-    stage('Deploy') {
-      steps {
-        echo 'Deploying....'
-      }
-    }
-  }
 }
